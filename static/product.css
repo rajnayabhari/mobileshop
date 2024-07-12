@@ -1,0 +1,7 @@
+.product-card {
+    padding: 20px; /* Adjust the padding as needed */
+}
+.product-image {
+    height: 200px; /* Ensure images are a uniform size */
+    object-fit: cover;
+}

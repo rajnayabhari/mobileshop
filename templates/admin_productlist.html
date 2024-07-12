@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Product List</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td><img src="{{ url_for('static', filename='uploads/' ~ product[5]) }}" class="card-img-top product-image" alt="{{ product[1] }}" style="width: 100px;"></td>
+            <td>{{ product[1] }}</td>
+            <td>
+                <p class="card-text">{{ product[2][:100] }}{% if product[2]|length > 100 %}...{% endif %}</p>
+                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#productModal{{ product[0] }}">
+                    Read more
+                </button>
+            </td>
+            <td>NRP{{ product[3] }}</td>
+            <td>{{ product[4] }}</td>
+            <td>
+                <a href="{{ url_for('update', item_id=product[0]) }}" class="btn btn-primary btn-sm">Update</a>
+                <a href="{{ url_for('delete', item_id=product[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        <div class="modal fade" id="productModal{{ product[0] }}" tabindex="-1" aria-labelledby="productModalLabel{{ product[0] }}" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel{{ product[0] }}">{{ product[1] }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ product[2] }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
